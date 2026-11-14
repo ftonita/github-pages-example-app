@@ -1,6 +1,8 @@
+import argparse
 from html.parser import HTMLParser
 from pathlib import Path
 import re
+import sys
 import unittest
 
 
@@ -29,11 +31,13 @@ class DocumentParser(HTMLParser):
 
 
 class IndexHtmlTests(unittest.TestCase):
+    index = INDEX
+
     @classmethod
     def setUpClass(cls):
-        if not INDEX.is_file():
-            raise FileNotFoundError(f"Файл не найден: {INDEX}")
-        cls.html = INDEX.read_text(encoding="utf-8")
+        if not cls.index.is_file():
+            raise FileNotFoundError(f"Файл не найден: {cls.index}")
+        cls.html = cls.index.read_text(encoding="utf-8")
         cls.parser = DocumentParser()
         cls.parser.feed(cls.html)
 
@@ -48,4 +52,8 @@ class IndexHtmlTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    argument_parser = argparse.ArgumentParser()
+    argument_parser.add_argument("--file", required=True, type=Path)
+    args, _ = argument_parser.parse_known_args()
+    IndexHtmlTests.index = args.file
+    unittest.main(argv=[sys.argv[0]], verbosity=2)

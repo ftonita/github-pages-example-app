@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: "3.x"
       - run: ls -la
-      - run: python3 scripts/test_index.py
+      - run: python3 scripts/test_index.py --file my_art_web/index.html
 
   deploy:
     needs: test
