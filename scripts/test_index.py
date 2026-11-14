@@ -4,7 +4,7 @@ import re
 import unittest
 
 
-INDEX = Path(__file__).resolve().parent.parent / "my_art_web" / "index.html"
+INDEX = Path(__file__).resolve() / "my_art_web" / "index.html"
 
 
 class DocumentParser(HTMLParser):
