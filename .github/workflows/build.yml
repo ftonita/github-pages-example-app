@@ -24,10 +24,13 @@ jobs:
       - run: mkdir public
       - run: npm install
       - run: npm run build:static
-      - run: |
-          for dir in dist public; do
-            if [ -d "$dir" ]; then
-              find "$dir" -type f -print -exec cat {} \;
-            fi
-          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: public/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: dist/
+      
 
