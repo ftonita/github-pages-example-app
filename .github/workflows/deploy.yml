@@ -16,8 +16,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      - run: ls -la
-      - run: python3 scripts/test_index.py --file my_art_web/index.html
+      - name: Find site directory
+        run: |
+          if [ -f my_art_web/index.html ]; then
+            echo "SITE_DIR=my_art_web" >> "$GITHUB_ENV"
+          elif [ -f index.html ]; then
+            echo "SITE_DIR=." >> "$GITHUB_ENV"
+          else
+            echo "index.html not found in my_art_web/ or repository root" >&2
+            find . -maxdepth 3 -name index.html -print >&2
+            exit 1
+          fi
+      - run: python3 scripts/test_index.py --file "$SITE_DIR/index.html"
 
   deploy:
     needs: test
@@ -31,8 +41,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Find site directory
+        run: |
+          if [ -f my_art_web/index.html ]; then
+            echo "SITE_DIR=my_art_web" >> "$GITHUB_ENV"
+          elif [ -f index.html ]; then
+            echo "SITE_DIR=." >> "$GITHUB_ENV"
+          else
+            echo "index.html not found in my_art_web/ or repository root" >&2
+            find . -maxdepth 3 -name index.html -print >&2
+            exit 1
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: my_art_web
+          path: ${{ env.SITE_DIR }}
       - id: deployment
         uses: actions/deploy-pages@v4
