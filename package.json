@@ -1,0 +1,22 @@
+{
+  "name": "github-pages-example-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:static": "node scripts/build-static.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ftonita/github-pages-example-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ftonita/github-pages-example-app/issues"
+  },
+  "homepage": "https://github.com/ftonita/github-pages-example-app#readme"
+}
