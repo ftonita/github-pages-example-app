@@ -27,19 +27,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Find site directory
-        run: |
-          if [ -f my_art_web/index.html ]; then
-            echo "SITE_DIR=my_art_web" >> "$GITHUB_ENV"
-          elif [ -f index.html ]; then
-            echo "SITE_DIR=." >> "$GITHUB_ENV"
-          else
-            echo "index.html not found in my_art_web/ or repository root" >&2
-            find . -maxdepth 3 -name index.html -print >&2
-            exit 1
-          fi
+      - run: ls -la
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.SITE_DIR }}
+          path: my_art_web
       - id: deployment
         uses: actions/deploy-pages@v4
