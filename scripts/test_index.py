@@ -4,7 +4,11 @@ import re
 import unittest
 
 
-INDEX = Path("my_art_web/index.html")
+ROOT = Path(__file__).resolve().parents[1]
+INDEX = next(
+    (path for path in (ROOT / "my_art_web" / "index.html", ROOT / "index.html") if path.is_file()),
+    ROOT / "my_art_web" / "index.html",
+)
 
 
 class DocumentParser(HTMLParser):
